@@ -51,18 +51,6 @@ jobs:
           pip install -r requirements.txt
           pip install pyyaml  # For sync script
 
-      # Clone source repositories
-      - name: Clone source repositories
-        run: |
-          git clone https://github.com/isaac-for-healthcare/i4h-asset-catalog.git
-          git clone https://github.com/isaac-for-healthcare/i4h-sensor-simulation.git
-          git clone https://github.com/isaac-for-healthcare/i4h-workflows.git
-
-      # Run the sync script to pull content from source repos
-      - name: Sync README files
-        run: |
-          python scripts/sync_readmes.py
-
       # Build the documentation
       - name: Build documentation
         run: |
