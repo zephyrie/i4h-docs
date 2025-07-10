@@ -1,14 +1,3 @@
----
-title: AI Policy Runner
-source: i4h-workflows/workflows/robotic_ultrasound/scripts/policy_runner/README.md
-generated: 2025-06-11
----
-
-!!! info "Source"
-    This content is synchronized from [`i4h-workflows/workflows/robotic_ultrasound/scripts/policy_runner/README.md`](https://github.com/isaac-for-healthcare/i4h-workflows/blob/main/workflows/robotic_ultrasound/scripts/policy_runner/README.md)
-    
-    To make changes, please edit the source file and run the synchronization script.
-
 # Policy runner for both the simulation and physical world
 
 This script allows running different policy models (currently PI0 and GR00T N1) using DDS for communication, suitable for both simulation and physical robot control.

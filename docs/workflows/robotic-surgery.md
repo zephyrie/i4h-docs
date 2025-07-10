@@ -68,7 +68,7 @@ Compatible with dVRK (da Vinci Research Kit), Virtual Incision MIRA, Universal R
     - :material-stairs: Curriculum learning
     - :material-sync: Sim-to-real transfer
     
-    [Start Training →](../how-to/how-to-surgery-state-machines.md)
+    [Start Training →](robotic-surgery-surgical-tasks.md)
 
 </div>
 
@@ -78,6 +78,8 @@ Compatible with dVRK (da Vinci Research Kit), Virtual Incision MIRA, Universal R
 
 The robotic surgery workflow integrates seamlessly with custom hardware and patient models:
 
-- :material-human: [**Bring Your Own Patient**](../how-to/how-to-bring-your-own-patient.md) - Convert medical imaging to surgical planning models
-- :material-robot: [**Bring Your Own Robot**](../how-to/how-to-bring-your-own-robot.md) - Add your surgical robot platform
-- :material-virtual-reality: [**Bring Your Own XR**](../how-to/how-to-bring-your-own-xr.md) - Use mixed reality for surgical planning
+- :material-human: [**Bring Your Own Patient**](tutorials/bring-your-own-patient.md) - Convert medical imaging to surgical planning models
+- :material-virtual-reality: [**Bring Your Own XR**](tutorials/bring-your-own-xr.md) - Use mixed reality for surgical planning
+- :material-robot: **Bring Your Own Robot** - Integrate custom platforms
+    - [MIRA Robot Teleoperation](tutorials/mira-teleoperation.md) - Remote operation of MIRA surgical robot
+    - [Replace Franka Hand with Ultrasound](tutorials/franka-ultrasound-probe.md) - Hardware modification guide

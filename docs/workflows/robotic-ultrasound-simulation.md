@@ -1,14 +1,3 @@
----
-title: Simulation & Scanning
-source: i4h-workflows/workflows/robotic_ultrasound/scripts/simulation/README.md
-generated: 2025-06-11
----
-
-!!! info "Source"
-    This content is synchronized from [`i4h-workflows/workflows/robotic_ultrasound/scripts/simulation/README.md`](https://github.com/isaac-for-healthcare/i4h-workflows/blob/main/workflows/robotic_ultrasound/scripts/simulation/README.md)
-    
-    To make changes, please edit the source file and run the synchronization script.
-
 # IsaacLab simulation for robotic ultrasound
 
 ## Table of Contents
@@ -30,7 +19,7 @@ Follow the [Environment Setup](../../README.md#environment-setup) instructions t
 ## Environments
 
 Isaac-Lab scripts usually receive a `--task <task_name>` argument. This argument is used to select the environment/task to be run.
-These tasks are detected by the `gym.register` function in the [exts/robotic_us_ext/__init__.py](exts/robotic_us_ext/robotic_us_ext/tasks/ultrasound/approach/config/franka/__init__.py).
+These tasks are detected by the `gym.register` function in the [exts/robotic_us_ext/\__init__.py](exts/robotic_us_ext/robotic_us_ext/tasks/ultrasound/approach/config/franka/__init__.py).
 
 These registered tasks are then further defined in the [environment configuration file](exts/robotic_us_ext/robotic_us_ext/tasks/ultrasound/approach/config/franka/franka_manager_rl_env_cfg.py).
 
@@ -56,9 +45,10 @@ Please refer to the [Environment Setup - Set environment variables before runnin
 
 #### Run the script
 
-Please move to the current [`simulation` folder](./) and execute:
+Please cd to the current [`simulation` folder](./) and execute:
 
 ```sh
+cd workflows/robotic_ultrasound/scripts/simulation
 python imitation_learning/pi0_policy/eval.py --enable_camera
 ```
 
@@ -79,9 +69,10 @@ Please refer to the [Environment Setup - Set environment variables before runnin
 
 #### Run the script
 
-Please move to the current [`simulation` folder](./) and execute:
+Please cd to the current [`simulation` folder](./) and execute:
 
 ```sh
+cd ../simulation
 python environments/sim_with_dds.py --enable_cameras
 ```
 
@@ -130,9 +121,10 @@ The state machine integrates multiple control modules:
 
 Please refer to the [Environment Setup - Set environment variables before running the scripts](../../README.md#set-environment-variables-before-running-the-scripts) to set the `PYTHONPATH`.
 
-Then please move to the current [`simulation` folder](./) and execute:
+Then please cd to the current [`simulation` folder](./) and execute:
 
 ```sh
+cd ../simulation
 python environments/state_machine/liver_scan_sm.py --enable_cameras
 ```
 
@@ -196,7 +188,7 @@ Ensure your `PYTHONPATH` is set up as described in the [Environment Setup - Set 
 Navigate to the [`simulation` folder](./) and execute:
 
 ```sh
-python environments/state_machine/replay_recording.py --hdf5_path /path/to/your/hdf5_data_directory --task <YourTaskName>
+python environments/state_machine/replay_recording.py /path/to/your/hdf5_data_directory --task <YourTaskName> --enable_camera
 ```
 
 Replace `/path/to/your/hdf5_data_directory` with the actual path to the directory containing your `data_*.hdf5` files or single HDF5 file, and `<YourTaskName>` with the task name used during data collection (e.g., `Isaac-Teleop-Torso-FrankaUsRs-IK-RL-Rel-v0`).
@@ -218,23 +210,30 @@ Replace `/path/to/your/hdf5_data_directory` with the actual path to the director
 [Cosmos-Transfer1](https://github.com/nvidia-cosmos/cosmos-transfer1) is a world-to-world transfer model designed to bridge the perceptual divide between simulated and real-world environments.
 We introduce a training-free guided generation method on top of Cosmos-Transfer1 to overcome unsatisfactory results on unseen healthcare simulation assets.
 Directly applying Cosmos-Transfer with various control inputs results in unsatisfactory outputs for the human phantom and robotic arm (see bottom figure). In contrast, our guided generation method preserves the appearance of the phantom and robotic arm while generating diverse backgrounds.
-<img src="/assets/images/cosmos_transfer_result.png" width="512" height="600" />
+
+<img src="../../assets/images/cosmos_transfer_result.png" width="512" height="600" />
 
 This training-free guided generation approach by encoding simulation videos into the latent space and applying spatial masking to guide the generation process. The trade-off between realism and faithfulness can be controlled by adjusting the number of guided denoising steps. In addition, our generation pipeline supports multi-view video generation. We first leverage the camera information to warp the generated room view to wrist view, then use it as the guidance of wrist-view generation.
 
 #### Download Cosmos-transfer1 Checkpoints
-Please install cosmos-transfer1 dependency and move to the third party `cosmos-transfer1` folder. The following command downloads the checkpoints:
+The cosmos-transfer1 dependency is already installed after completing the [Installation](#installation) section. Please navigate to the third party `cosmos-transfer1` folder and run the following command to download the checkpoints:
 ```sh
-conda activate cosmos-transfer1
+cd third_party/cosmos-transfer1
 CUDA_HOME=$CONDA_PREFIX PYTHONPATH=$(pwd) python scripts/download_checkpoints.py --output_dir checkpoints/
 ```
+
+> **Note:** You need to be logged in to Hugging Face (`huggingface-cli login`) before running the download script. Additionally, for the `meta-llama/Llama-Guard-3-8B` model, you need to request additional access on the [Hugging Face model page](https://huggingface.co/meta-llama/Llama-Guard-3-8B) before you can download it.
+
+
+
 #### Video Prompt Generation
 We follow the idea in [lucidsim](https://github.com/lucidsim/lucidsim) to first generate batches of meta prompt that contains a very concise description of the potential scene, then instruct the LLM (e.g., [gemma-3-27b-it](https://build.nvidia.com/google/gemma-3-27b-it)) to upsample the meta prompt with detailed descriptions.
 We provide example prompts in [`generated_prompts_two_seperate_views.json`](./environments/cosmos_transfer1/config/generated_prompts_two_seperate_views.json).
 
 #### Running Cosmos-transfer1 + Guided Generation
-Please move to the current [`simulation` folder](./) and execute the following command to start the generation pipeline:
+Please cd back to the current [simulation folder](./) and execute the following command to start the generation pipeline:
 ```sh
+cd ../../workflows/robotic_ultrasound/scripts/simulation/
 export CHECKPOINT_DIR="path to downloaded cosmos-transfer1 checkpoints"
 # Set project root path
 export PROJECT_ROOT="{your path}/i4h-workflows"
@@ -291,9 +290,10 @@ The teleoperation interface allows direct control of the robotic arm using vario
 
 #### Running Teleoperation
 
-Please move to the current [`simulation` folder](./) and execute the following command to start the teleoperation:
+Please cd to the current [`simulation` folder](./) and execute the following command to start the teleoperation:
 
 ```sh
+cd ../simulation
 python environments/teleoperation/teleop_se3_agent.py --enable_cameras
 ```
 
@@ -342,7 +342,7 @@ based on 3D meshes. The simulator uses Holoscan framework and DDS communication 
 
 #### NVIDIA OptiX Raytracing with Python Bindings
 
-For instructions on preparing and building the Python module, please refer to the [Environment Setup](../../README.md#install-the-raytracing-ultrasound-simulator) instructions and [Ultrasound Raytracing README](https://github.com/isaac-for-healthcare/i4h-sensor-simulation/blob/v0.2.0rc1/ultrasound-raytracing/README.md) to setup the `raysim` module correctly.
+For instructions on preparing and building the Python module, please refer to the [Environment Setup](../../README.md#install-the-raytracing-ultrasound-simulator) instructions and [Ultrasound Raytracing README](https://github.com/isaac-for-healthcare/i4h-sensor-simulation/blob/v0.2.0rc2/ultrasound-raytracing/README.md) to setup the `raysim` module correctly.
 
 
 #### Configuration

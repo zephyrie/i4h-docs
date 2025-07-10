@@ -1,28 +1,18 @@
----
-title: Robotic Ultrasound Training with GR00T-N1
-source: i4h-workflows/workflows/robotic_ultrasound/scripts/training/gr00t_n1/README.md
----
-
-!!! info "Source"
-    This content is synchronized from [`i4h-workflows/workflows/robotic_ultrasound/scripts/training/gr00t_n1/README.md`](https://github.com/isaac-for-healthcare/i4h-workflows/blob/main/workflows/robotic_ultrasound/scripts/training/gr00t_n1/README.md)
-    
-    To make changes, please edit the source file and run the synchronization script.
-
-# Robotic Ultrasound Training with GR00T-N1
+# 🤖 Robotic Ultrasound Training with GR00T-N1
 
 This repository provides a complete workflow for training GR00T-N1 models for robotic ultrasound applications. NVIDIA Isaac GR00T N1 is the world's first open foundation model for generalized humanoid robot reasoning and skills. This cross-embodiment model takes multimodal input, including language and images, to perform manipulation tasks in diverse environments.
 
-## Table of Contents
+## 📋 Table of Contents
 
-- [Overview](#overview)
-- [Installation](#installation)
-- [Data Collection](#data-collection)
-- [Data Conversion](#data-conversion)
-- [Running Training](#running-training)
-- [Understanding Outputs](#understanding-outputs)
+- [Overview](#-overview)
+- [Installation](#️-installation)
+- [Data Collection](#-data-collection)
+- [Data Conversion](#-data-conversion)
+- [Running Training](#-running-training)
+- [Understanding Outputs](#-understanding-outputs)
 - [References](#references)
 
-## Overview
+## 🔍 Overview
 
 This workflow enables you to:
 
@@ -31,7 +21,7 @@ This workflow enables you to:
 3. Fine-tune a GR00T-N1 model
 4. Deploy the trained model for inference
 
-## Installation
+## 🛠️ Installation
 
 First, install the necessary environment and dependencies using our [provided script](../../../../../tools/env_setup_robot_us.sh):
 ```bash
@@ -43,13 +33,13 @@ This script:
 - Clones Isaac-GR00T repository
 - Installs LeRobot and other dependencies
 
-## Data Collection
+## 📊 Data Collection
 
 To train a GR00T-N1 model, you\'ll need to collect robotic ultrasound data. We provide a state machine implementation in the simulation environment that can generate training episodes that emulate a liver ultrasound scan.
 
 See the [simulation README](../../simulation/README.md#liver-scan-state-machine) for more information on how to collect data.
 
-## Data Conversion
+## 🔄 Data Conversion
 
 GR00T-N1 uses the **LeRobot** data format for training. To facilitate this, we provide a script that converts your HDF5 data into the required format. The script is located at:
 
@@ -86,7 +76,7 @@ The script will:
 
 The converted dataset will be saved in `~/.cache/huggingface/lerobot/<repo_id>`.
 
-## Running Training
+## 🚀 Running Training
 
 To start training with a GR00T-N1 configuration:
 Please move to the current [`gr00t_n1` folder](./) and execute:
@@ -98,7 +88,7 @@ python train.py --data_config single_panda_us --dataset_path `data_path`
 - `--dataset_path`: Path to the training data
 - `--output_dir`: Path to save the checkpoint
 
-## Understanding Outputs
+## 📊 Understanding Outputs
 
 ### Checkpoints
 

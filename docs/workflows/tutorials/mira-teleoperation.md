@@ -1,22 +1,14 @@
----
-title: Virtual Incision MIRA Teleoperation Tutorial
-source: i4h-workflows/tutorials/assets/bring_your_own_robot/Virtual_Incision_MIRA/README.md
----
-
-!!! info "Source"
-    This content is synchronized from [`i4h-workflows/tutorials/assets/bring_your_own_robot/Virtual_Incision_MIRA/README.md`](https://github.com/isaac-for-healthcare/i4h-workflows/blob/main/tutorials/assets/bring_your_own_robot/Virtual_Incision_MIRA/README.md)
-    
-    To make changes, please edit the source file and run the synchronization script.
-
 # [Virtual Incision MIRA](https://virtualincision.com/mira/) Teleoperation Tutorial
 
 This tutorial shows how to teleoperate the [Virtual Incision MIRA](https://virtualincision.com/mira/) robot in Isaac Sim using keyboard controls.
 
 <p align="center" style="display: flex; justify-content: center; gap: 10px;">
-  <img src="../../assets/images/mira.png" alt="Virtual Incision MIRA Example" style="width: 70%; height: auto; aspect-ratio: 16/9; object-fit: cover;" />
+  <img src="../../../assets/images/mira.png" alt="Virtual Incision MIRA Example" style="width: 70%; height: auto; aspect-ratio: 16/9; object-fit: cover;" />
 </p>
 
 ## Environment Setup
+
+**Note**: The setup process takes approximately 30-40 minutes to complete, depending on your system and network connection.
 
 This tutorial requires the following dependencies:
 - [IsaacSim 4.5.0](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/index.html)

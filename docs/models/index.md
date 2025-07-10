@@ -9,8 +9,7 @@ Models & Policies provide pre-trained AI models and robotic control policies spe
 **Key Benefits:**
 
 - :material-rocket-launch: **Rapid Development**: Skip months of training with pre-built models
-- :material-shield-check: **Medical Safety**: Built-in safety protocols for healthcare environments
-- :material-chart-line: **Proven Performance**: Validated across multiple clinical scenarios
+- :material-chart-line: **Proven Performance**: Validated across multiple use cases
 - :material-cog: **Easy Integration**: Simple APIs for workflow integration
 
 ---
@@ -23,33 +22,54 @@ Models & Policies provide pre-trained AI models and robotic control policies spe
     
     Foundation model optimized for healthcare robotics applications
     
+    **Available Applications:**
+    
+    - Autonomous ultrasound scanning
+    - _More modalities coming soon_
+    
     **Features:**
-
+    
     - Medical device compatibility
     - Patient safety protocols
     - Real-time inference capabilities
     - Healthcare-specific training data
 
+    [Learn More →](pi0.md)
+
 -   ### :material-robot: **Post-trained GR00T N1**
     
     Advanced humanoid robotics model for healthcare environments
     
+    **Available Applications:**
+    
+    - Autonomous ultrasound scanning
+    - _More modalities coming soon_
+    
     **Features:**
-
+    
     - Human-robot collaboration
     - Medical procedure assistance
     - Advanced manipulation capabilities
     - Clinical environment adaptation
 
+    [Learn More →](gr00t-n1.md)
+
 -   ### :material-medical-bag: **Surgical Control Policies**
     
     Specialized policies for surgical robotics applications
     
+    **Available Policies:**
+    
+    - ACT (Action Chunking Transformer)
+    - _Additional policies in development_
+    
     **Features:**
-
+    
     - Precision surgical movements
     - Safety constraint enforcement
     - Multi-modal sensor integration
     - Procedure-specific optimization
+
+    [Learn More →](surgical-control-policies.md)
 
 </div> 

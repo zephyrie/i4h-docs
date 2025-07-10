@@ -1,31 +1,21 @@
----
-title: Robotic Ultrasound Training with PI Zero
-source: i4h-workflows/workflows/robotic_ultrasound/scripts/training/pi_zero/README.md
----
-
-!!! info "Source"
-    This content is synchronized from [`i4h-workflows/workflows/robotic_ultrasound/scripts/training/pi_zero/README.md`](https://github.com/isaac-for-healthcare/i4h-workflows/blob/main/workflows/robotic_ultrasound/scripts/training/pi_zero/README.md)
-    
-    To make changes, please edit the source file and run the synchronization script.
-
-# Robotic Ultrasound Training with PI Zero
+# 🤖 Robotic Ultrasound Training with PI Zero
 
 This repository provides a complete workflow for training [PI Zero](https://www.physicalintelligence.company/blog/pi0) models for robotic ultrasound applications. PI Zero is a powerful vision-language-action model developed by [Physical Intelligence](https://www.physicalintelligence.company/) that can be fine-tuned for various robotic tasks.
 
-## Table of Contents
+## 📋 Table of Contents
 
-- [Overview](#overview)
-- [Installation](#installation)
-- [Data Collection](#data-collection)
-- [Data Conversion](#data-conversion)
-- [Training Configuration](#training-configuration)
-- [Running Training](#running-training)
-- [Understanding Outputs](#understanding-outputs)
-- [Testing Inference](#testing-inference)
-- [Troubleshooting](#troubleshooting)
-- [Acknowledgements](#acknowledgements)
+- [Overview](#-overview)
+- [Installation](#️-installation)
+- [Data Collection](#-data-collection)
+- [Data Conversion](#-data-conversion)
+- [Training Configuration](#%EF%B8%8F-training-configuration)
+- [Running Training](#-running-training)
+- [Understanding Outputs](#-understanding-outputs)
+- [Testing Inference](#-testing-inference)
+- [Troubleshooting](#-troubleshooting)
+- [Acknowledgements](#-acknowledgements)
 
-## Overview
+## 🔍 Overview
 
 This workflow enables you to:
 
@@ -34,7 +24,7 @@ This workflow enables you to:
 3. Fine-tune a PI Zero model using either full supervised fine-tuning or LoRA (Low-Rank Adaptation)
 4. Deploy the trained model for inference
 
-## Installation
+## 🛠️ Installation
 
 First, install the OpenPI repository and its dependencies using our [provided script](../../../../../tools/env_setup_robot_us.sh):
 ```bash
@@ -48,13 +38,13 @@ This script:
 - Installs LeRobot and other dependencies
 - Sets up the OpenPI client and core packages
 
-## Data Collection
+## 📊 Data Collection
 
 To train a PI Zero model, you'll need to collect robotic ultrasound data. We provide a state machine implementation in the simulation environment that can generate training episodes that emulate a liver ultrasound scan.
 
 See the [simulation README](../../simulation/README.md#liver-scan-state-machine) for more information on how to collect data.
 
-## Data Conversion
+## 🔄 Data Conversion
 
 PI Zero uses the LeRobot data format for training. We provide a script to convert your HDF5 data to this format.
 
@@ -79,14 +69,14 @@ The script will:
 
 The converted dataset will be saved in `~/.cache/huggingface/lerobot/<repo_id>`.
 
-## Training Configuration
+## ⚙️ Training Configuration
 
 ### Full Fine-tuning vs. LoRA
 
 - **Full Fine-tuning** (`robotic_ultrasound`): Updates all model parameters. Requires more GPU memory (>70GB) but can achieve better performance on larger datasets.
 - **LoRA Fine-tuning** (`robotic_ultrasound_lora`): Uses Low-Rank Adaptation to update a small subset of parameters. Requires less GPU memory (~22.5GB) while still achieving good results.
 
-## Running Training
+## 🚀 Running Training
 
 To start training with the default LoRA configuration, please move to the current [`pi_zero` folder](./) and execute:
 ```bash
@@ -103,7 +93,7 @@ XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 python train.py --config robotic_ultrasound_l
 ```
 This allows JAX to use up to 90% of your GPU memory (default is 75%).
 
-## Understanding Outputs
+## 📊 Understanding Outputs
 
 ### Normalization Statistics
 
@@ -135,10 +125,10 @@ To view detailed training metrics, ensure you log into W&B:
 wandb login
 ```
 
-## Testing Inference
+## 🚀 Testing Inference
 See the [policy_runner README](../../policy_runner/README.md) for more information on how to test inference with the trained model.
 
-## Troubleshooting
+## 🔧 Troubleshooting
 
 ### Common Issues
 
@@ -146,7 +136,7 @@ See the [policy_runner README](../../policy_runner/README.md) for more informati
 - **Data format errors**: Ensure your HDF5 data follows the expected format. Check the playback script to validate.
 - **Missing normalization statistics**: The first training run should generate these automatically. If missing, check permissions in the assets directory.
 
-## Acknowledgements
+## 🙏 Acknowledgements
 
 This project builds upon the [PI Zero model](https://www.physicalintelligence.company/blog/pi0) developed by [Physical Intelligence](https://www.physicalintelligence.company/). We thank them for making their models and training infrastructure available to the community.
 

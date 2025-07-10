@@ -1,18 +1,8 @@
----
-title: Bring Your Own Head-Mounted Display with OpenXR
-source: i4h-workflows/tutorials/assets/bring_your_own_xr/README.md
----
-
-!!! info "Source"
-    This content is synchronized from [`i4h-workflows/tutorials/assets/bring_your_own_xr/README.md`](https://github.com/isaac-for-healthcare/i4h-workflows/blob/main/tutorials/assets/bring_your_own_xr/README.md)
-    
-    To make changes, please edit the source file and run the synchronization script.
-
 # Bring Your Own Head-Mounted Display with OpenXR
 
 This guide helps you use your own OpenXR-enabled mixed reality device for simulated robotic teleoperation in Isaac Lab.
 
-![Robotic Surgery with XR Client](../../assets/images/xr_teleop_avp_sim.png)
+![Robotic Surgery with XR Client](../../../assets/images/xr_teleop_avp_sim.png)
 
 # Background
 
@@ -176,11 +166,11 @@ python environments/teleoperation/teleop_se3_agent.py --enable_cameras --teleop_
 
 The sample application will launch as normal with an extra tab titled "AR". Navigate to the "AR" tab and verify that "OpenXR" is selected as the output plugin.
 
-![Sample Scene with AR Tab](../../assets/images/isaac_sim_ui.png)
+![Sample Scene with AR Tab](../../../assets/images/isaac_sim_ui.png)
 
 Click the "Start AR" button to launch the scene into stereo rendering mode with OpenXR.
 
-![Sample Scene with AR Running](../../assets/images/isaac_sim_ui_ar.png)
+![Sample Scene with AR Running](../../../assets/images/isaac_sim_ui_ar.png)
 
 **Note**: You can enter and exit the XR scene at any time before or after connecting the Apple Vision Pro device. The CloudXR OpenXR Runtime will receive frames but not transmit
 to any device if no device is connected. Click "Stop AR" to exit the OpenXR session and return to the standard mono viewing mode.
@@ -188,10 +178,27 @@ to any device if no device is connected. Click "Stop AR" to exit the OpenXR sess
 **Note**: XR teleoperation updates are currently applied relative to the probe head. The coordinate system from
 the user's tracked right hand is applied along the local probe axes as pictured below:
 - **Hand Tracking Left/Right** -> Green axis
-- **Hand Tracking Up/Down** -> Red axis
-- **Hand Tracking Towards/Away** -> Blue axis
+- **Hand Tracking Up/Down** -> Blue axis
+- **Hand Tracking Towards/Away** -> Red axis
 
-![Coordinate frame as viewed along the robotic ultrasound probe](../../assets/images/probe_frame.png)
+![Coordinate frame as viewed along the robotic ultrasound probe](../../../assets/images/probe_frame.png)
+
+This mapping is achieved by a `transform_matrix` defined in the `teleop_se3_agent.py` script. The hand tracking system provides coordinates in its own frame, which needs to be converted to the robot's end-effector (probe) frame. The `transform_matrix`:
+```python
+torch.tensor(
+    [[-1, 0, 0, 0], [0, 1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]],
+    dtype=torch.float32,
+    device=env.unwrapped.device,
+)
+```
+This matrix effectively flips the X and Z axes of the incoming hand tracking data. Specifically:
+- The X-axis (Up/Down in hand tracking) is inverted.
+- The Y-axis (Left/Right in hand tracking) remains unchanged.
+- The Z-axis (Towards/Away in hand tracking) is inverted.
+
+This transformation ensures that the user's hand movements are intuitively mapped to the robot's actions in the simulation environment.
+For a clearer understanding of how the `transform_matrix` maps hand tracking coordinates to the probe frame, please refer to the coordinate frame visualization below:
+![Coordinate frame](../../../assets/images/probe_frame_room_view.png)
 
 ## Apple Vision Pro
 
@@ -204,7 +211,7 @@ In your Apple Vision Pro headset, launch the Isaac XR Teleop Sample Client and e
 
 If you have previously launched the Isaac Lab scene into mixed reality mode, you will see an immersive rendering when you start the Apple Vision Pro client application.
 
-![Robotic Ultrasound in Apple Vision Pro](../../assets/images/xr_teleop_avp_sim.png)
+![Robotic Ultrasound in Apple Vision Pro](../../../assets/images/xr_teleop_avp_sim.png)
 
 **Note**: You can connect to and disconnect from the CloudXR runtime at any time without disrupting the Isaac Lab scene.
 

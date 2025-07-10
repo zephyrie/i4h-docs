@@ -1,14 +1,3 @@
----
-title: Visualization Tools
-source: i4h-workflows/workflows/robotic_ultrasound/scripts/utils/README.md
-generated: 2025-06-11
----
-
-!!! info "Source"
-    This content is synchronized from [`i4h-workflows/workflows/robotic_ultrasound/scripts/utils/README.md`](https://github.com/isaac-for-healthcare/i4h-workflows/blob/main/workflows/robotic_ultrasound/scripts/utils/README.md)
-    
-    To make changes, please edit the source file and run the synchronization script.
-
 ## Robotic Ultrasound Utilities
 This folder contains utility tools for the robotic ultrasound simulation workflow, including a visualization application that provides real-time monitoring of camera feeds, ultrasound imagery, and robot state.
 

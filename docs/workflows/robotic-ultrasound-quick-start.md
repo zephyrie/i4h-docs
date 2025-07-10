@@ -1,326 +1,196 @@
----
-title: Quick Start Guide
-source: i4h-workflows/workflows/robotic_ultrasound/README.md
----
-
-# Quick Start Guide
-
-!!! info "Source"
-    This content is synchronized from [`i4h-workflows/workflows/robotic_ultrasound/README.md`](https://github.com/isaac-for-healthcare/i4h-workflows/blob/main/workflows/robotic_ultrasound/README.md)
-    
-    To make changes, please edit the source file and run the synchronization script.
-
 # Robotic Ultrasound Workflow
 
 ![Robotic Ultrasound Workflow](../../assets/images/robotic_us_workflow.jpg)
 
-## Overview
+The Robotic Ultrasound Workflow is a comprehensive solution designed for healthcare professionals, medical imaging researchers, and ultrasound device manufacturers working in the field of autonomous ultrasound imaging. This workflow provides a robust framework for simulating, training, and deploying robotic ultrasound systems using NVIDIA's advanced ray tracing technology. By offering a physics-accurate ultrasound simulation environment, it enables researchers to develop and validate autonomous scanning protocols, train AI models for image interpretation, and accelerate the development of next-generation ultrasound systems without requiring physical hardware.
 
-The Robotic Ultrasound workflow enables autonomous and semi-autonomous ultrasound scanning using robot manipulators with force control and AI-guided positioning. This workflow combines real-time ultrasound simulation, robotic control, and machine learning for applications in diagnostic imaging, interventional guidance, and medical training.
+The workflow features a state-of-the-art ultrasound sensor simulation that leverages GPU-accelerated ray tracing to model the complex physics of ultrasound wave propagation. The simulator accurately represents:
+- Acoustic wave propagation through different tissue types
+- Tissue-specific acoustic properties (impedance, attenuation, scattering)
+- Real-time B-mode image generation based on echo signals
+- Dynamic tissue deformation and movement
+- Multi-frequency transducer capabilities
 
-## Getting Started
+This physics-based approach enables the generation of highly realistic synthetic ultrasound images that closely match real-world data, making it ideal for training AI models and validating autonomous scanning algorithms. The workflow supports multiple AI policies (PI0, GR00T N1) and can be deployed using NVIDIA Holoscan for clinical applications, providing a complete pipeline from simulation to real-world deployment.
+
+
+## Table of Contents
+- [System Requirements](#system-requirements)
+- [Quick Start](#quick-start)
+- [Environment Setup](#environment-setup)
+  - [Prerequisites](#prerequisites)
+  - [Installation Steps](#installation-steps)
+  - [Asset Setup](#asset-setup)
+  - [Environment Variables](#environment-variables)
+- [Running the Workflow](#running-the-workflow)
+
+## System Requirements
+
+### Hardware Requirements
+- Ubuntu 22.04
+- NVIDIA GPU with compute capability 8.6 and 24GB of memory ([see NVIDIA's compute capability guide](https://developer.nvidia.com/cuda-gpus#compute))
+    - GPUs without RT Cores (A100, H100) are not supported
+- 50GB of disk space
+
+### Software Requirements
+- [NVIDIA Driver Version >= 555](https://www.nvidia.com/en-us/drivers/)
+- [CUDA Version >= 12.6]((https://developer.nvidia.com/cuda-downloads))
+- Python 3.10
+- [RTI DDS License](https://www.rti.com/free-trial)
+
+## Quick Start
+
+**Note**: The setup process takes approximately 30-40 minutes to complete, depending on your system and network connection.
+
+1. Install NVIDIA driver (>= 555) and CUDA (>= 12.6)
+2. Install conda:
+
+   [Miniconda](https://www.anaconda.com/docs/getting-started/miniconda/main) is recommended.
+
+3. Create and activate conda environment:
+   ```bash
+   conda create -n robotic_ultrasound python=3.10 -y
+   conda activate robotic_ultrasound
+   ```
+4. Clone the repository:
+   ```bash
+   git clone https://github.com/isaac-for-healthcare/i4h-workflows.git
+   cd i4h-workflows
+   ```
+5. Run the setup script:
+   ```bash
+   cd <path-to-i4h-workflows>
+   bash tools/env_setup_robot_us.sh --policy pi0
+   ```
+6. Download assets:
+   ```bash
+   i4h-asset-retrieve
+   ```
+7. Set environment variables:
+   ```bash
+   export PYTHONPATH=`<path-to-i4h-workflows>/workflows/robotic_ultrasound/scripts:<path-to-i4h-workflows>`
+   export RTI_LICENSE_FILE=<path-to-rti-license-file>
+   ```
+
+## Environment Setup
+
+**Note**: The setup process takes approximately 30-40 minutes to complete, depending on your system and network connection.
 
 ### Prerequisites
 
-**Hardware Requirements:**
-- Ubuntu 22.04
-- NVIDIA GPU with RT Cores and 32GB+ memory (RTX 3090 or better)
-- 50GB available disk space
+The robotic ultrasound workflow is built on the following dependencies:
+- [IsaacSim 4.5.0](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/index.html)
+- [IsaacLab 2.1.0](https://isaac-sim.github.io/IsaacLab/v2.1.0/index.html)
+- [openpi](https://github.com/Physical-Intelligence/openpi) and [lerobot](https://github.com/huggingface/lerobot)
+- [Raytracing Ultrasound Simulator](https://github.com/isaac-for-healthcare/i4h-sensor-simulation/tree/main/ultrasound-raytracing)
 
-**Software Requirements:**
-- NVIDIA Driver 555+
-- CUDA 12.6+
-- Python 3.10
-- RTI DDS License (free academic/trial available)
+### Installation Steps
 
-### Quick Start
+#### 1. Install NVIDIA Driver
+Install or upgrade to the latest NVIDIA driver from [NVIDIA website](https://www.nvidia.com/en-us/drivers/)
 
-Get up and running in 5 minutes:
+**Note**: The Raytracing Ultrasound Simulator requires driver version >= 555.
 
+#### 2. Install CUDA
+Install CUDA from [NVIDIA CUDA Quick Start Guide](https://docs.nvidia.com/cuda/cuda-quick-start-guide/index.html)
+
+**Note**: The Raytracing Ultrasound Simulator requires CUDA version >= 12.6.
+
+#### 3. Obtain RTI DDS License
+RTI DDS is the common communication package for all scripts. Please refer to [DDS website](https://www.rti.com/products) for registration. You will need to obtain a license file and set the `RTI_LICENSE_FILE` environment variable to its path.
+
+#### 4. Install Dependencies
+
+##### Create Conda Environment
 ```bash
-# 1. Create conda environment
+# Create a new conda environment
 conda create -n robotic_ultrasound python=3.10 -y
+# Activate the environment
 conda activate robotic_ultrasound
+```
 
-# 2. Clone and enter repository
-git clone https://github.com/isaac-for-healthcare/i4h-workflows.git
-cd i4h-workflows
+##### Install Raytracing Ultrasound Simulator
+Choose one of the following options:
+- **(Use pre-built binary)** Download the pre-release version from [here](https://github.com/isaac-for-healthcare/i4h-sensor-simulation/releases/tag/v0.2.0rc2) and extract to `workflows/robotic_ultrasound/scripts/raysim`
+- **(Compiling from source)** Install and build following instructions in [Raytracing Ultrasound Simulator](https://github.com/isaac-for-healthcare/i4h-sensor-simulation/tree/main/ultrasound-raytracing#installation)
 
-# 3. Run automated setup (choose your AI policy)
-bash tools/env_setup_robot_us.sh --policy pi0  # or gr00tn1
+##### Install All Dependencies
+The main script `tools/env_setup_robot_us.sh` installs all necessary dependencies. It first installs common base components and then policy-specific packages based on an argument.
 
-# 4. Download required assets
+###### Base Components
+- IsaacSim 4.5.0 (and core dependencies)
+- IsaacLab 2.1.0
+- Robotic Ultrasound Extension (`robotic_us_ext`)
+- Lerobot (from Hugging Face)
+- Holoscan 2.9.0 (including associated Holoscan apps)
+- Essential build tools and libraries
+
+###### Policy-Specific Dependencies
+The script supports installing additional policy-specific dependencies using the `--policy` flag:
+- **`--policy pi0` (Default)**: Installs PI0 policy dependencies (e.g., OpenPI)
+- **`--policy gr00tn1`**: Installs GR00T N1 policy dependencies (e.g., Isaac-GR00T)
+- **`--policy none`**: Installs only common base dependencies
+
+Run the script from the repository root:
+```bash
+cd <path-to-i4h-workflows>
+bash tools/env_setup_robot_us.sh --policy <your_chosen_policy>
+```
+
+**Note**: During dependency installation, you may see PyTorch version mismatch warnings. These are expected and can be safely ignored:
+```
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+isaaclab 0.34.9 requires torch==2.5.1, but you have torch 2.6.0 which is incompatible.
+isaaclab-rl 0.1.0 requires torch==2.5.1, but you have torch 2.6.0 which is incompatible.
+isaaclab-tasks 0.10.24 requires torch==2.5.1, but you have torch 2.6.0 which is incompatible.
+rl-games 1.6.1 requires wandb<0.13.0,>=0.12.11, but you have wandb 0.19.9 which is incompatible.
+```
+These warnings occur because `isaaclab` and `openpi` require different fixed versions of PyTorch. The workflow will function correctly despite these warnings.
+
+### Asset Setup
+
+Download the required assets using:
+```bash
 i4h-asset-retrieve
-
-# 5. Set environment variables
-export PYTHONPATH=$PWD/workflows/robotic_ultrasound/scripts
-export RTI_LICENSE_FILE=/path/to/your/rti_license.dat
-
-# 6. Run example simulation
-cd workflows/robotic_ultrasound
-python scripts/simulation/liver_scan_demo.py
 ```
 
-## Understanding the System
+This will download assets to `~/.cache/i4h-assets/<sha256>`. For more details, refer to the [Asset Container Helper](https://github.com/isaac-for-healthcare/i4h-asset-catalog/blob/v0.2.0rc2/docs/catalog_helper.md).
 
-### Architecture Overview
+**Note**: During asset download, you may see warnings about blocking functions. This is expected behavior and the download will complete successfully despite these warnings.
 
-The robotic ultrasound system consists of four main components:
+### Environment Variables
 
-1. **Simulation Environment**: Isaac Sim-based physics simulation with realistic patient models
-2. **Ultrasound Simulation**: GPU-accelerated raytracing for real-time B-mode imaging
-3. **Robot Control**: Force-compliant control with safety monitoring
-4. **AI Policies**: Pre-trained models for autonomous scanning tasks
+Before running any scripts, you need to set up the following environment variables:
 
-### Supported Configurations
-
-**Robots:**
-- Franka Emika Panda (7-DOF collaborative robot)
-- Universal Robots UR5/UR10
-- Custom robots via URDF import
-
-**Ultrasound Probes:**
-- Linear array (vascular, musculoskeletal)
-- Curvilinear (abdominal, obstetric)
-- Phased array (cardiac)
-
-**AI Policies:**
-- **PI0**: Vision-based policy from Physical Intelligence
-- **GR00T-N1**: Multi-modal policy with force feedback
-
-## Installation Guide
-
-### Step 1: System Setup
-
-**Install NVIDIA Driver (555+):**
-```bash
-# Check current version
-nvidia-smi
-
-# If upgrade needed, download from:
-# https://www.nvidia.com/drivers
-```
-
-**Install CUDA (12.6+):**
-```bash
-# Follow official guide:
-# https://docs.nvidia.com/cuda/cuda-quick-start-guide/
-```
-
-### Step 2: RTI DDS License
-
-RTI DDS enables real-time communication between components:
-
-1. Register at [RTI website](https://www.rti.com/free-trial) for free trial
-2. Download license file (rti_license.dat)
-3. Set environment variable:
+1. **PYTHONPATH**: Set this to point to the scripts directory:
    ```bash
-   export RTI_LICENSE_FILE=/path/to/rti_license.dat
+   export PYTHONPATH=<path-to-i4h-workflows>/workflows/robotic_ultrasound/scripts
    ```
+   This ensures Python can find the modules under the [`scripts`](./scripts) directory.
 
-### Step 3: Dependency Installation
+2. **RTI_LICENSE_FILE**: Set this to point to your RTI DDS license file:
+   ```bash
+   export RTI_LICENSE_FILE=<path-to-rti-license-file>
+   ```
+   This is required for the DDS communication package to function properly.
 
-The setup script installs all dependencies automatically:
 
-```bash
-# From repository root
-bash tools/env_setup_robot_us.sh --policy <choice>
-```
+## Running the Workflow
 
-**Policy Options:**
-- `pi0` (default): Install PI0 policy dependencies
-- `gr00tn1`: Install GR00T-N1 policy dependencies  
-- `none`: Base dependencies only
+The robotic ultrasound workflow provides several example scripts demonstrating different components:
 
-**What Gets Installed:**
-- Isaac Sim 4.5.0 (GPU simulation platform)
-- Isaac Lab 2.1.0 (robotics framework)
-- Ultrasound raytracing simulator
-- Holoscan 2.9.0 (edge deployment)
-- Policy-specific ML frameworks
+- [Holoscan Apps](./scripts/holoscan_apps)
+- [Policy Runner](./scripts/policy_runner)
+- [Simulation](./scripts/simulation)
+- [Training](./scripts/training)
+- [Visualization Utilities](./scripts/utils)
 
-**Note**: PyTorch version warnings during installation are expected and can be ignored.
+### Important Notes
+1. You may need to run multiple scripts simultaneously in different terminals
+2. A typical setup requires 4 terminals running:
+   - Visualization
+   - Policy runner
+   - Sim_with_dds
+   - Ultrasound raytracing simulations
 
-### Step 4: Asset Download
-
-Download simulation assets (patient models, robot meshes, etc.):
-
-```bash
-i4h-asset-retrieve
-```
-
-Assets are cached in `~/.cache/i4h-assets/`. First download is ~5GB.
-
-### Step 5: Ultrasound Simulator Setup
-
-**Option A: Pre-built Binary (Experimental)**
-```bash
-# Download from releases
-wget https://github.com/isaac-for-healthcare/i4h-sensor-simulation/releases/download/v0.2.0rc1/raysim-linux-x86_64.tar.gz
-tar -xzf raysim-linux-x86_64.tar.gz -C workflows/robotic_ultrasound/scripts/
-```
-
-**Option B: Build from Source (Recommended)**
-Follow instructions at [Ultrasound Raytracing Simulator](https://github.com/isaac-for-healthcare/i4h-sensor-simulation/tree/main/ultrasound-raytracing#installation)
-
-## How-to Guides
-
-### Run a Basic Liver Scan
-
-```python
-# scripts/simulation/liver_scan_demo.py
-from simulation.environments import LiverScanEnv
-from simulation.configs import BasicConfig
-
-# Create environment
-env = LiverScanEnv(BasicConfig())
-
-# Run automated scan
-trajectory = env.generate_scan_trajectory()
-for i, target in enumerate(trajectory):
-    obs = env.step(target)
-    ultrasound_image = obs['ultrasound_image']
-    print(f"Scan point {i}: Force = {obs['force']:.1f}N")
-```
-
-### Teleoperate with Haptic Device
-
-```bash
-# Terminal 1: Start simulation
-python scripts/simulation/teleoperation/teleop_se3_agent.py
-
-# Terminal 2: Connect haptic device (optional)
-python scripts/holoscan_apps/haply_controller.py
-```
-
-### Train Custom Policy
-
-```bash
-# Collect demonstrations
-python scripts/simulation/state_machine/data_collection_manager.py \
-    --task liver_scan \
-    --num_episodes 100
-
-# Train policy
-python scripts/training/pi_zero/train.py \
-    --dataset data/liver_scan_demos \
-    --epochs 50
-```
-
-### Deploy to Real Robot
-
-```python
-# scripts/deploy_to_robot.py
-from policy_runner import PolicyRunner
-from dds import FrankaController
-
-# Load trained policy
-runner = PolicyRunner(
-    policy_path="models/liver_scan_pi0.pth",
-    robot_ip="192.168.1.100"
-)
-
-# Run with safety monitoring
-runner.execute_with_safety(
-    force_limit=10.0,  # Newtons
-    velocity_limit=0.1  # m/s
-)
-```
-
-## Available Components
-
-### Simulation Environments
-- **Liver Scan**: Autonomous scanning of liver phantom
-- **Vascular Access**: Needle guidance for IV insertion  
-- **Cardiac Echo**: Four-chamber heart view acquisition
-- **Training Phantom**: Basic skills development
-
-### State Machines
-- **Data Collection**: Record expert demonstrations
-- **Evaluation**: Benchmark policy performance
-- **Replay**: Visualize recorded trajectories
-
-### Holoscan Applications  
-- **Clarius Integration**: Real ultrasound probe support
-- **RealSense Cameras**: RGB-D perception
-- **Haptic Controllers**: Force feedback devices
-
-### Training Scripts
-- **PI0 Training**: Vision-based imitation learning
-- **GR00T-N1 Training**: Multi-modal policy learning
-
-## Multi-Terminal Workflow
-
-A complete system typically requires 4 terminal windows:
-
-**Terminal 1 - Visualization:**
-```bash
-python scripts/utils/visualization.py
-```
-
-**Terminal 2 - Policy Runner:**
-```bash
-python scripts/policy_runner/run_policy.py --policy pi0
-```
-
-**Terminal 3 - Simulation with DDS:**
-```bash
-python scripts/simulation/environments/sim_with_dds.py
-```
-
-**Terminal 4 - Ultrasound Simulation:**
-```bash
-python scripts/simulation/ultrasound_raytracing.py
-```
-
-## Troubleshooting
-
-### Common Issues
-
-**"No RTI license found"**
-- Ensure `RTI_LICENSE_FILE` environment variable is set
-- Verify license file exists and is valid
-
-**"CUDA out of memory"**
-- Reduce simulation resolution in config
-- Use smaller batch size for training
-- Close other GPU applications
-
-**"Module not found" errors**
-- Verify `PYTHONPATH` includes scripts directory
-- Ensure all dependencies installed successfully
-
-**Poor ultrasound image quality**
-- Increase ray samples in ultrasound config
-- Check probe-phantom contact
-- Verify material properties are set correctly
-
-### Performance Optimization
-
-- Use `--headless` flag for training without GUI
-- Enable GPU memory pooling in configs
-- Reduce physics substeps for faster simulation
-
-## API Reference
-
-### Core Classes
-
-- `LiverScanEnv`: Main simulation environment
-- `PolicyRunner`: Executes trained policies
-- `DDSInterface`: Real-time communication
-- `UltrasoundSimulator`: B-mode image generation
-
-### Configuration
-
-See `scripts/simulation/configs/` for detailed configuration options:
-- `basic.py`: Default settings
-- `advanced.py`: High-fidelity simulation
-- `performance.py`: Optimized for speed
-
-## Contributing
-
-We welcome contributions! See [CONTRIBUTING.md](../../CONTRIBUTING.md) for guidelines.
-
-## License
-
-Apache License 2.0 - see [LICENSE](../../LICENSE) for details.
+If you encounter issues not covered in the notes above, please check the documentation for each component or open a new issue on GitHub.

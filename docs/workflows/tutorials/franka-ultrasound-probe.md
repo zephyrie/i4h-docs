@@ -1,13 +1,3 @@
----
-title: Bring Your Own Robot - Replacing Franka Hand with Ultrasound Probe
-source: i4h-workflows/tutorials/assets/bring_your_own_robot/replace_franka_hand_with_ultrasound_probe.md
----
-
-!!! info "Source"
-    This content is synchronized from [`i4h-workflows/tutorials/assets/bring_your_own_robot/replace_franka_hand_with_ultrasound_probe.md`](https://github.com/isaac-for-healthcare/i4h-workflows/blob/main/tutorials/assets/bring_your_own_robot/replace_franka_hand_with_ultrasound_probe.md)
-    
-    To make changes, please edit the source file and run the synchronization script.
-
 # Bring Your Own Robot - Replacing Franka Hand with Ultrasound Probe
 
 This tutorial demonstrates how to replace the Franka Hand with an ultrasound probe to create a robotic ultrasound scanning system in NVIDIA Omniverse.
@@ -58,7 +48,7 @@ To convert URDF to USD for use in Isaac Sim:
    - Select your URDF file and configure import settings
    - Click "Import" to generate the USD representation
 
-For detailed steps, refer to the [official documentation on importing URDF](https://docs.isaacsim.omniverse.nvidia.com/latest/robot_setup/import_urdf.html).
+For detailed steps, refer to the [official documentation on importing URDF](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/robot_setup/import_urdf.html).
 
 ## Replacing Franka Hand with Ultrasound Probe
 
@@ -116,9 +106,9 @@ For detailed steps, refer to the [official documentation on importing URDF](http
 
 ## Additional Resources
 
-- [URDF to USD Conversion Documentation](https://docs.isaacsim.omniverse.nvidia.com/latest/robot_setup/import_urdf.html#tutorial-import-urdf)
+- [URDF to USD Conversion Documentation](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/robot_setup/import_urdf.html#tutorial-import-urdf)
 - [Omniverse CAD Extension Documentation](https://docs.omniverse.nvidia.com/extensions/latest/ext_cad-converter/manual.html)
-- [Omniverse Importers and Exporters Documentation](https://docs.isaacsim.omniverse.nvidia.com/latest/robot_setup/importers_exporters.html#)
+- [Omniverse Importers and Exporters Documentation](https://docs.isaacsim.omniverse.nvidia.com/4.5.0/robot_setup/importers_exporters.html#)
 - [Video Tutorial: Training a Robot from Scratch in Simulation, from URDF to OpenUSD](https://www.youtube.com/live/_HMk7I-vSBQ)
 
 ## Support

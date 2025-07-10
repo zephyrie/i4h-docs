@@ -1,13 +1,3 @@
----
-title: Bring Your Own Patient
-source: i4h-workflows/tutorials/assets/bring_your_own_patient/README.md
----
-
-!!! info "Source"
-    This content is synchronized from [`i4h-workflows/tutorials/assets/bring_your_own_patient/README.md`](https://github.com/isaac-for-healthcare/i4h-workflows/blob/main/tutorials/assets/bring_your_own_patient/README.md)
-    
-    To make changes, please edit the source file and run the synchronization script.
-
 # Bring Your Own Patient
 
 This guide helps you convert your own CT or MRI scans into USD (Universal Scene Description) files for 3D visualization.
@@ -41,7 +31,7 @@ Currently, the robotic ultrasound workflow uses the assets in [I4H Asset Catalog
 
 If you generate the mesh and USD files from the different source (e.g. mesh from CT scan but USD from public human body 3D model), you need to align the meshes to achieve realistic simulation results.
 
-- USD model follows the [USD convention](https://docs.omniverse.nvidia.com/isaacsim/latest/reference_conventions.html#usd-axes).
+- USD model follows the [USD convention](ttps://docs.isaacsim.omniverse.nvidia.com/4.5.0/reference_material/reference_conventions.html#usd-axes).
   - It is the `organ` frame in the [environment configuration file](../../../workflows/robotic_ultrasound/scripts/simulation/exts/robotic_us_ext/robotic_us_ext/tasks/ultrasound/approach/config/franka/franka_manager_rl_env_cfg.py)
 
 - Mesh object for the organs
@@ -62,7 +52,7 @@ v_{offset} = \{x_{center},\ y_{center},\ z_{center}\}
 Here we assume the organ meshes has Superior-Inferior-Left-Right-Anterior-Posterior (SI-LR-AP) axes. We used those axis to align the organ meshes with the exterior model.
 
 We place the body model in both the mesh and USD coordinate systems. Ribs and spines are rendered to show the orientation.
-![image](../../assets/images/transformation.png)
+![image](../../../assets/images/transformation.png)
 
 It need to be noted that this placement of the body model is based on how the USD model is created. You will need to make sure SI-LR-AP axes are generally aligned.
 

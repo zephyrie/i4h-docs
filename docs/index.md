@@ -1,6 +1,6 @@
 # Isaac for Healthcare
 
-NVIDIA Isaac for Healthcare is the three-computer solution for healthcare robotics developers, spanning simulation, training, and deployment of AI robotics solutions. Built on NVIDIA Isaac Sim, Isaac Lab, Omniverse, and Holoscan, i4h provides a domain-specific framework for designing, simulating, testing, training, and deploying AI-enabled medical robots.
+NVIDIA Isaac for Healthcare is the three-computer solution for healthcare robotics developers, spanning simulation, training, and deployment of AI robotics solutions. Built on NVIDIA Isaac Sim, Isaac Lab, Omniverse, and Holoscan, Isaac for Healthcare provides a domain-specific framework for designing, simulating, testing, training, and deploying AI-enabled medical robots.
 
 **Built for healthcare applications across:**
 
@@ -35,11 +35,10 @@ Choose your development path. Each component provides production-ready tools and
     
     - RGB Camera Sim
     - Ultrasound Sensor Sim
-    - Force & Haptic Feedback
     
     [View Sensors →](sensor-simulation/index.md)
 
--   ### :material-brain: **Models & Policies**
+-   ### :material-brain: **Models**
     
     Ready-to-use AI models and robotic policies for medical applications. Accelerate development with domain-specific neural networks.
     
@@ -51,15 +50,17 @@ Choose your development path. Each component provides production-ready tools and
 
 -   ### :material-timeline: **Workflows**
     
-    Complete end-to-end robotics applications with pre-trained policies and evaluation metrics. Ready for surgical automation and telesurgery.
+    End-to-end blueprints that developers could use to build healthcare robotics starting from simulation, synthetic data generation, policy/model training and sim to real deployment.
     
     - Robotic Surgery Subtask Automation
     - Robotic Autonomous Ultrasound
     - Tele-op / Tele-surgery
+    - Extensible tutorials for custom hardware and assets
+    - Training guides for GR00T and Pi-Zero models
     
     [Explore Workflows →](workflows/index.md)
 
--   ### :material-database: **SDG Capabilities**
+-   ### :material-database: **Synthetic Data Generation**
     
     Synthetic data generation capabilities for training robust AI models. Create unlimited, diverse datasets for medical robotics validation.
     
@@ -83,53 +84,12 @@ Choose your development path. Each component provides production-ready tools and
 
 ---
 
-## Learn & Extend
-
-Master Isaac for Healthcare with our comprehensive learning resources and extension guides:
-
-<div class="grid cards" markdown>
-
--   ### :material-book-open-variant: **How-to Guides**
-    
-    Step-by-step tutorials for common tasks
-    
-    - [Bring Your Own Patient](how-to/how-to-bring-your-own-patient.md) - Convert medical imaging to simulation
-    - [Bring Your Own Robot](how-to/how-to-bring-your-own-robot.md) - Integrate custom platforms
-    - [Train AI Models](how-to/how-to-train-gr00t.md) - GR00T and Pi-Zero training
-    
-    [All Guides →](how-to/index.md)
-
--   ### :material-tune: **Customization**
-    
-    Extend the platform with your own assets
-    
-    - [Custom Sensors](how-to/how-to-custom-sensors.md) - Add new sensor types
-    - [XR Integration](how-to/how-to-bring-your-own-xr.md) - Mixed reality devices
-    - [State Machines](how-to/how-to-surgery-state-machines.md) - Surgical automation
-    
-    [Learn More →](how-to/index.md)
-
--   ### :material-api: **References**
-    
-    Technical documentation and APIs
-    
-    - [API Documentation](reference/index.md) - Complete API reference
-    - [Hardware Support](reference/reference-hardware-integration.md) - Compatible devices
-    - [Installation Guide](reference/installation.md) - Setup instructions
-    
-    [View Docs →](reference/index.md)
-
-</div>
-
----
-
 ## Quick Start
 
-Ready to build the future of medical robotics? Install the core infrastructure components, then choose a workflow to begin:
+Ready to build the future of medical robotics? Get started with these resources:
 
-1. :material-download: **[Installation Guide](reference/installation.md)** - Set up Isaac Sim, Holoscan, and dependencies
-2. :material-map-marker-path: **[Choose a Workflow](workflows/index.md)** - Pick your healthcare robotics application
-3. :material-book-open-page-variant: **[Browse How-to Guides](how-to/index.md)** - Learn specific tasks and techniques
+1. :material-map-marker-path: **[Choose a Workflow](workflows/index.md)** - Pick your healthcare robotics application
+2. :material-cube-outline: **[Browse Assets](asset-catalog/index.md)** - Access medical equipment and anatomical models
 
-:material-forum: Join our community on [Discord](#) • :material-github: Report issues on [GitHub](https://github.com//isaac-for-healthcare/)
+:material-forum: Join our community on [Discord](https://discord.gg/nvidiaomniverse) (#isaac-for-healthcare channel) • :material-github: Report issues on [GitHub](https://github.com//isaac-for-healthcare/)
 

@@ -1,13 +1,3 @@
----
-title: Isaac for Healthcare - Robotic Surgery
-source: i4h-workflows/workflows/robotic_surgery/scripts/simulation/README.md
----
-
-!!! info "Source"
-    This content is synchronized from [`i4h-workflows/workflows/robotic_surgery/scripts/simulation/README.md`](https://github.com/isaac-for-healthcare/i4h-workflows/blob/main/workflows/robotic_surgery/scripts/simulation/README.md)
-    
-    To make changes, please edit the source file and run the synchronization script.
-
 # Isaac for Healthcare - Robotic Surgery
 
 

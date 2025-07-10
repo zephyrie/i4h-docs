@@ -1,22 +1,12 @@
----
-title: Quick Start Guide
-source: i4h-workflows/workflows/robotic_surgery/README.md
----
-
-# Quick Start Guide
-
-!!! info "Source"
-    This content is synchronized from [`i4h-workflows/workflows/robotic_surgery/README.md`](https://github.com/isaac-for-healthcare/i4h-workflows/blob/main/workflows/robotic_surgery/README.md)
-    
-    To make changes, please edit the source file and run the synchronization script.
-
 # Robotic Surgery Workflow
 
 ![Robotic Surgery Workflow](../../assets/images/robotic_surgery_workflow.jpg)
 
+The Robotic Surgery Workflow is a comprehensive solution designed for healthcare professionals and researchers working in the field of robotic-assisted surgery. This workflow provides a robust framework for simulating, training, and analyzing robotic surgical procedures in a virtual environment. It leverages NVIDIA's ray tracing capabilities to create highly realistic surgical simulations, enabling surgeons to practice complex procedures, researchers to develop new surgical techniques, and medical institutions to enhance their training programs. By offering a safe, controlled environment for surgical practice and research, this workflow helps improve surgical outcomes, reduce training costs, and advance the field of robotic surgery.
+
+
 ## Table of Contents
 - [System Requirements](#system-requirements)
-- [Quick Start](#quick-start)
 - [Environment Setup](#environment-setup)
   - [Prerequisites](#prerequisites)
   - [Installation Steps](#installation-steps)
@@ -35,32 +25,12 @@ source: i4h-workflows/workflows/robotic_surgery/README.md
 - 16GB RAM minimum
 
 ### Software Requirements
-- NVIDIA Driver Version >= 555
+- [NVIDIA Driver Version >= 555](https://www.nvidia.com/en-us/drivers/)
 - Python 3.10
 
-## Quick Start
-
-1. Install NVIDIA driver (>= 555)
-2. Create and activate conda environment:
-   ```bash
-   conda create -n robotic_surgery python=3.10 -y
-   conda activate robotic_surgery
-   ```
-3. Run the setup script:
-   ```bash
-   cd <path-to-i4h-workflows>
-   bash tools/env_setup_robot_surgery.sh
-   ```
-4. Download assets:
-   ```bash
-   i4h-asset-retrieve
-   ```
-5. Set environment variables:
-   ```bash
-   export PYTHONPATH=<path-to-i4h-workflows>/workflows/robotic_surgery/scripts
-   ```
-
 ## Environment Setup
+
+**Note**: The setup process takes approximately 30-40 minutes to complete, depending on your system and network connection.
 
 ### Prerequisites
 
@@ -77,13 +47,24 @@ Install or upgrade to the latest NVIDIA driver from [NVIDIA website](https://www
 
 #### 2. Install Dependencies
 
+##### Install Conda
+
+[Miniconda](https://www.anaconda.com/docs/getting-started/miniconda/main) is recommended.
+
 ##### Create Conda Environment
+
 ```bash
 # Create a new conda environment
 conda create -n robotic_surgery python=3.10 -y
 # Activate the environment
 conda activate robotic_surgery
 ```
+
+##### Clone repository
+   ```bash
+   git clone https://github.com/isaac-for-healthcare/i4h-workflows.git
+   cd i4h-workflows
+   ```
 
 ##### Install All Dependencies
 The main script `tools/env_setup_robot_surgery.sh` installs all necessary dependencies:
@@ -101,12 +82,14 @@ bash tools/env_setup_robot_surgery.sh
 
 ### Asset Setup
 
+**Note**: The assets can be automatically retrieved when running the workflows. Optionally, you can also download all the assets in advance. Please note that the assets are approximately 65 GB and may take some time to download depending on your internet connection.
+
 Download the required assets using:
 ```bash
 i4h-asset-retrieve
 ```
 
-This will download assets to `~/.cache/i4h-assets/<sha256>`. For more details, refer to the [Asset Container Helper](https://github.com/isaac-for-healthcare/i4h-asset-catalog/blob/v0.2.0rc1/docs/catalog_helper.md).
+This will download assets to `~/.cache/i4h-assets/<sha256>`. For more details, refer to the [Asset Container Helper](https://github.com/isaac-for-healthcare/i4h-asset-catalog/blob/main/docs/catalog_helper.md).
 
 ### Environment Variables
 
