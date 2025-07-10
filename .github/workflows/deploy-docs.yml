@@ -54,7 +54,7 @@ jobs:
       # Build the documentation
       - name: Build documentation
         run: |
-          mkdocs build --verbose
+          mkdocs build
 
       # Upload the built site as an artifact
       - name: Upload artifact

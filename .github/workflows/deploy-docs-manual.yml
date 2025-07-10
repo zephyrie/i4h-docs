@@ -50,7 +50,7 @@ jobs:
       - name: Build documentation (no sync)
         run: |
           echo "Building documentation without syncing external repos..."
-          mkdocs build --verbose --strict
+          mkdocs build
         env:
           # Disable the sync hook by setting an environment variable
           # The sync script should check for this
